@@ -1,24 +1,13 @@
-services:
-  redis:
-    image: redis:5.0
-    volumes:
-      - redis_data:/var/lib/redis
-      - redis_conf:/usr/local/etc/redis
-      - ../logs/redis:/var/log/redis/
-    ports:
-      - 6379:6379
-    environment:
-      - REDIS_REPLICATION_MODE=master
-      - ALLOW_EMPTY_PASSWORD=yes
-    networks:
-      - adobe
-    container_name: redis
-    restart: always
-networks:
-    adobe:
-        driver: bridge
-volumes:
-    redis_data:
-        driver: local
-    redis_conf:
-        driver: local
+redis:
+  image: redis:5.0
+  volumes:
+    - ./redis/data:/var/lib/redis
+    - ./redis/conf:/usr/local/etc/redis
+    - ../logs/redis:/var/log/redis/
+  ports:
+    - 6379:6379
+  environment:
+    - REDIS_REPLICATION_MODE=master
+    - ALLOW_EMPTY_PASSWORD=yes
+  container_name: redis
+  restart: always

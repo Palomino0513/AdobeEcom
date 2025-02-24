@@ -1,27 +1,18 @@
-services:
-  elasticsearch7:
-    image: elasticsearch:7.7.0
-    volumes:
-      - elasticsearch_data:/usr/share/elasticsearch/data
-      - ../logs/elastic:/var/log/elasticsearch/
-      - ./mnt:/mnt/docker
-    ports:
-      - 9200:9200
-    environment:
-      - discovery.type=single-node
-      - bootstrap.memory_lock=true
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    networks:
-      - adobe
-    container_name: elasticsearch7
-    entrypoint: /mnt/docker/docker-entrypoint.sh
-    restart: always
-networks:
-    adobe:
-        driver: bridge
-volumes:
-  elasticsearch_data:
-    driver: local
+elasticsearch7:
+  image: elasticsearch:7.7.0
+  volumes:
+    - ./elasticsearch:/usr/share/elasticsearch/data
+    - ../logs/elastic:/var/log/elasticsearch/
+    - ./mnt:/mnt/docker
+  ports:
+    - 9200:9200
+  environment:
+    - discovery.type=single-node
+    - bootstrap.memory_lock=true
+  ulimits:
+    memlock:
+      soft: -1
+      hard: -1
+  container_name: elasticsearch7
+  entrypoint: /mnt/docker/docker-entrypoint.sh
+  restart: always
