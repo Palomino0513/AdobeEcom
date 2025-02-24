@@ -1,0 +1,13 @@
+redis:
+  image: redis:5.0
+  volumes:
+    - ./redis/data:/var/lib/redis
+    - ./redis/conf:/usr/local/etc/redis
+    - ../services_logs/redis:/var/log/redis/
+  ports:
+    - 6379:6379
+  environment:
+    - REDIS_REPLICATION_MODE=master
+    - ALLOW_EMPTY_PASSWORD=yes
+  container_name: redis
+  restart: always
