@@ -38,13 +38,13 @@ return [
             'default' => [
                 'host' => 'mysql',
                 'username' => 'root',
-                'dbname' => 'promo',
+                'dbname' => 'oxxo',
                 'password' => 'mysql'
             ],
             'indexer' => [
                 'host' => 'mysql',
                 'username' => 'root',
-                'dbname' => 'promo',
+                'dbname' => 'oxxo',
                 'password' => 'mysql'
             ]
         ]
@@ -81,7 +81,7 @@ return [
             'catalog' => [
                 'search' => [
                     'engine' => 'elasticsearch7',
-                    'elasticsearch7_server_hostname' => 'elastic',
+                    'elasticsearch7_server_hostname' => 'elasticsearch7',
                     'elasticsearch7_server_port' => 9200
                 ]
             ]

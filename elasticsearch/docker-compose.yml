@@ -2,9 +2,9 @@ services:
   elasticsearch7:
     image: elasticsearch:7.7.0
     volumes:
-      - ./elasticsearch:/usr/share/elasticsearch/data
+      - elastic:/usr/share/elasticsearch/data
       - ../logs/elastic:/var/log/elasticsearch/
-      - ./mnt:/mnt/docker/
+      - ./mnt:/mnt/docker
     ports:
       - "9200:9200"
     environment:
@@ -22,3 +22,6 @@ services:
 networks:
   adobe:
     external: true
+volumes:
+    elastic:
+        driver: local
