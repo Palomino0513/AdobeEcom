@@ -3,6 +3,7 @@ services:
     image: wolfsellers/nginx:1.8
     volumes:
       - ./nginx:/etc/nginx/conf.d/
+      - ./ssl:/etc/nginx/ssl/
       - ../services_logs/nginx:/var/log/nginx/
     ports:
       - "80:80"
