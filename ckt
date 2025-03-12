@@ -1,0 +1,42 @@
+#!/usr/bin/python3
+
+import sys
+import os
+import colorama
+from colorama import Fore, Style
+
+if sys.argv[0] != "./ckt":
+    print(Fore.CYAN + "Comando desconocido." + Style.RESET_ALL)
+    exit(0)
+
+if sys.argv[1] == "down" or sys.argv[1] == "restart":
+	print(Fore.CYAN + "Finalizando servicios." + Style.RESET_ALL)
+
+	print(Fore.CYAN + "Finalizando elasticsearch." + Style.RESET_ALL)
+	os.system("docker-compose -f elasticsearch/docker-compose.yml down")
+
+	print(Fore.CYAN + "Finalizando mysql." + Style.RESET_ALL)
+	os.system("docker-compose -f mysql/docker-compose.yml down")
+
+	print(Fore.CYAN + "Finalizando redis." + Style.RESET_ALL)
+	os.system("docker-compose -f redis/docker-compose.yml down")
+
+	print(Fore.CYAN + "Finalizando nginx." + Style.RESET_ALL)
+	os.system("docker-compose -f nginx/docker-compose.yml down")
+
+if sys.argv[1] == "up" or sys.argv[1] == "restart":
+	print(Fore.CYAN + "Iniciando servicios." + Style.RESET_ALL)
+
+	print(Fore.CYAN + "Iniciando elasticsearch." + Style.RESET_ALL)
+	os.system("docker-compose -f elasticsearch/docker-compose.yml up -d")
+
+	print(Fore.CYAN + "Iniciando mysql." + Style.RESET_ALL)
+	os.system("docker-compose -f mysql/docker-compose.yml up -d")
+
+	print(Fore.CYAN + "Iniciando redis." + Style.RESET_ALL)
+	os.system("docker-compose -f redis/docker-compose.yml up -d")
+
+	print(Fore.CYAN + "Iniciando nginx." + Style.RESET_ALL)
+	os.system("docker-compose -f nginx/docker-compose.yml up -d")
+
+exit(0)
