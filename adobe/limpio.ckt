@@ -59,6 +59,7 @@ if sys.argv[1] == "db":
                 """ % (db_name, db_name)
             print(Fore.CYAN + "Eliminando y creando base de datos " + db_name + " ..." + Style.RESET_ALL)
             os.system("docker exec -it " + container + " mysql -u root -p -e \"" + query + "\"")
+            exit(0)
 
         if sys.argv[2] == "fix":
             print(Fore.CYAN + "Preparando script para correguir la base de datos ..." + Style.RESET_ALL)

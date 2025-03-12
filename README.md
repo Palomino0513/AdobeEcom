@@ -47,3 +47,39 @@ composer create-project --repository-url=https://repo.magento.com/ magento/proje
 
 ```
 
+copiar .yml
+copiar ckt
+
+crear vhost
+
+crear o limpiar db
+
+entar en el contendor
+
+ejecutar script para incialiazar magento
+
+```
+php bin/magento setup:install \
+--base-url="https://limpio.local/" \
+--db-host="mysql" \
+--db-name="limpio" \
+--db-user="root" \
+--db-password="mysql" \
+--admin-firstname="admin" \
+--admin-lastname="magento" \
+--admin-email="admin@local.com" \
+--admin-user="admin" \
+--admin-password="local513" \
+--use-rewrites="1" \
+--backend-frontname="admin" \
+--language=en_US \
+--currency=USD \
+--timezone=America/Chicago \
+--opensearch-host=os-host.example.com \
+--search-engine=elasticsearch7 \
+--elasticsearch-host=elasticsearch7 \
+--elasticsearch-port=9200
+```
+
+
+hacer un upgrade para validar que todo este correcto
