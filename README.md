@@ -44,7 +44,6 @@ Para crear un proyecto nuevo se puede ejecutar la siguiente linea.
 
 ```
 composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition limpio --ignore-platform-reqs
-
 ```
 
 Una vez creado el proyecto en la carpeta de limpio procedemos copiar y renombrar el archivo de *docker-compose.yml* que se encuentra en la carpeta de *adobe* con el nombre de *limpio.yml*. En el caso de que el proyecto de limpio esta al mismo nivel que la carpeta de este proyecto, puede usar el siguiente comando para mover y renombar el archivo, en caso de que no, adapte el comando cambiando la direccion del proyecto limio.
@@ -78,8 +77,8 @@ upstream limpio.local { server 172.17.0.1:8006; }
 Con el del archivo del *docker-compose.yml* del proyecto.
 
 ```
-	ports:
-      - 8005:80
+ports:
+    - 8005:80
 ```
 
 En caso de que vaya a levantar un nuevo proyecto, se recomiendo usar los archivos de limpio para referencia y a partir de estos archivos realizar las configuraciones de su ambiente.
@@ -129,3 +128,49 @@ Para validar que la instalacion es correcta se sugiere hacer un *upgrade* para c
 ```
 ./ckt adobe upgrade
 ```
+
+Si el comando se ejecuto bien, significa que tenemos nuestro ambiente funcionando y listo para trabajar.
+
+## Instalacion de Sample Data en el proyecto limpio
+
+Sample Data es informacion de prueba que oferece Adobe en su proyecto de Ecommerce para tener una tienda con informacion y visualizar como es que funciona la tienda para adaptarla a nuestras neceisdades. Para instalar la informacion de Sample Data hay que ejecutar un solo comando, el cual se recomienda antes de ejecutar que se haga un respaldo para la base de datos.
+
+Para ejecutar el comando para instalar sample data debemos entrar al conetedor de Adobe Ecommerce, para ello ejecutamos la siguiente linea.
+
+```
+./ckt adobe
+```
+
+Una vez adentro del contenedor ejecutamos el siguiente comando.
+
+```
+php bin/magento sampledata:deploy
+```
+
+Una vez finalizado el comando realizamos un *upgrade* para que se reflejen los cambios. Este lo puede hacer aqui mismo o saliendo del contenedor con el comando *exit* y ejecutando el siguiente comando con nuestro archivo script.
+
+```
+./ckt adobe upgrade
+```
+
+Al finalizar el comando podremos ver que nuestro sitio luce diferente, ya contamos con mas informacion, exiten clientes, productos, ordenes y mas configuraciones que Adobe oferece para gestionar la tienda.
+
+Recomendamos hacer un dump de la base de datos en este momento, ya que puede ser util si en algun futuro quiere comprobar una funcionalidad y quiere ver el flujo nativo de Adobe Ecommerce.
+
+Para crear una cuenta de administrador puede ejecutar el siguiente comando.
+
+```
+./ckt adobe create-admin
+```
+
+Este comando le creara un usuario llamado *palomino* de caracter administrador y que podra acceder al administrador usando la siguiente url.
+
+```
+https://limpio.local/admin
+```
+
+En esta pagina tendremos un formmulario de tipo login para poder ingresar al administrador del proyecto. La contrasena del usuario es *Law200110513*.
+
+Tomar en cuenta que el archivo script solo tienen comandos de uso frecuente, los cuales puede personalizar a su gusto y agregar mas gusta.
+
+Eso es todo, Gracias.
