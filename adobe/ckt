@@ -4,8 +4,8 @@ import os
 import colorama
 from colorama import Fore, Style
 
-if sys.argv[0] != "./ckt":
-    print("Comando no valido.")
+if __name__ != '__main__':
+    print("Ejecucion no valida.")
     exit(0)
 
 if sys.argv[1] == "up":
