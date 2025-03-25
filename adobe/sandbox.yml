@@ -1,0 +1,12 @@
+web:
+  image: 'wolfsellers/magento2-cloud-local:linux-apache-phpfpm74'
+  ports:
+    - 8002:80
+  volumes:
+    - ./:/var/www/html
+    - ~/.composer:/home/magento2/.composer
+  external_links:
+    - "elasticsearch7:elastic"
+    - "redis:redis"
+    - "mysql:mysql"
+  container_name: sandbox

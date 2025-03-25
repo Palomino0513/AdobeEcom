@@ -1,0 +1,21 @@
+services:
+  web:
+    image: 'wolfsellers/magento2-cloud-local:linux-apache-phpfpm82'
+    ports:
+      - 8010:80
+      - 9000:9000
+    volumes:
+      - ./:/var/www/html
+      - ~/.composer:/home/magento2/.composer
+      - ./docker/php/php.ini:/usr/local/etc/php/php.ini
+    external_links:
+      - "elasticsearch7:elastic"
+      - "redis:redis"
+      - "mysql:mysql"
+    container_name: masbodega
+    restart: always
+    networks:
+      - adobe
+networks:
+  adobe:
+    external: true
