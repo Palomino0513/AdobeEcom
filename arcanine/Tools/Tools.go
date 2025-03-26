@@ -1,21 +1,28 @@
 package Tools
 
 import (
+	"context"
 	"fmt"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/client"
 	"os"
 	"os/exec"
+	"strings"
 )
 
 const (
-	ColorInfo    = "\033[36m"
-	ColorSuccess = "\033[36m"
-	ColorError   = "\033[36m"
-	ColorWarning = "\033[36m"
-	ColorReset   = "\033[0m"
+	ColorReset  = "\033[0m"  // Resetear color
+	ColorRed    = "\033[31m" // Error
+	ColorGreen  = "\033[32m" // Éxito
+	ColorYellow = "\033[33m" // Advertencia
+	ColorBlue   = "\033[34m"
+	ColorPurple = "\033[35m"
+	ColorCyan   = "\033[36m"
+	ColorWhite  = "\033[37m"
 )
 
 func Info() {
-	fmt.Println(string(ColorInfo), "Este commando se hizo con el objetivo de ejecutar comandos communes de Magento de"+
+	fmt.Println(string(ColorWhite), "Este commando se hizo con el objetivo de ejecutar comandos communes de Magento de"+
 		" la forma mas rapida y practica posible.", string(ColorReset))
 }
 
@@ -32,17 +39,43 @@ func RunCommand(name string, args ...string) {
 }
 
 func InfoMessage(message string) {
-	fmt.Println(string(ColorInfo), message, string(ColorReset))
+	fmt.Println(string(ColorCyan), message, string(ColorReset))
 }
 
 func SuccessMessage(message string) {
-	fmt.Println(string(ColorSuccess), message, string(ColorReset))
+	fmt.Println(string(ColorGreen), message, string(ColorReset))
 }
 
 func ErrorMessage(message string) {
-	fmt.Println(string(ColorError), message, string(ColorReset))
+	fmt.Println(string(ColorRed), message, string(ColorReset))
 }
 
 func WarningMessage(message string) {
-	fmt.Println(string(ColorWarning), message, string(ColorReset))
+	fmt.Println(string(ColorYellow), message, string(ColorReset))
+}
+
+func GetContainerIDByName(name string) (string, error) {
+	ctx := context.Background()
+
+	cli, err := client.NewClientWithOpts(client.FromEnv)
+	if err != nil {
+		return "", fmt.Errorf("error creating Docker client: %w", err)
+	}
+
+	// Lista todos los contenedores en ejecución
+	containers, err := cli.ContainerList(ctx, types.ContainerListOptions{All: true})
+	if err != nil {
+		return "", fmt.Errorf("error listing containers: %w", err)
+	}
+
+	for _, container := range containers {
+		for _, containerName := range container.Names {
+			cleanName := strings.TrimPrefix(containerName, "/")
+			if cleanName == name {
+				return container.ID, nil
+			}
+		}
+	}
+
+	return "", fmt.Errorf("container with name '%s' not found", name)
 }
