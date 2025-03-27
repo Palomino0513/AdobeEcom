@@ -1,11 +1,9 @@
 module Maria
 
-go 1.22.2
+go 1.23.0
 
-require (
-	github.com/palomino513/arcanine/Tools v1.0.0
-)
+toolchain go1.24.1
 
-replace (
-	github.com/palomino513/arcanine/Tools => ../Tools
-)
+require github.com/palomino513/arcanine/Tools v1.0.0
+
+replace github.com/palomino513/arcanine/Tools => ../Tools

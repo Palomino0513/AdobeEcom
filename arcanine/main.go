@@ -1,6 +1,7 @@
 package main
 
 import (
+	"Maria"
 	"fmt"
 	"github.com/palomino513/arcanine/Tools"
 	"os"
@@ -46,7 +47,21 @@ func main() {
 			fmt.Println("Error:", err)
 			return
 		}
-		fmt.Println("ID del contenedor:", containerId)
+
+		Tools.InfoMessage("ID del contenedor: " + containerId)
+		command := os.Args[2]
+
+		if command == "create" || arg == "Dc" {
+			Maria.CreateDatabase(containerId, DBName)
+		} else if command == "reset" || arg == "Dr" {
+			Maria.ResetDatabase(containerId, DBName)
+		} else if command == "fix" || arg == "Df" {
+			Maria.FixDatabase(containerId, DBName)
+		} else {
+			Tools.InfoMessage("Command not recognized: " + arg)
+		}
+		
+		return
 	}
 
 	Tools.Info()

@@ -1,10 +1,8 @@
 package Tools
 
 import (
-	"context"
+	"bytes"
 	"fmt"
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/client"
 	"os"
 	"os/exec"
 	"strings"
@@ -55,27 +53,20 @@ func WarningMessage(message string) {
 }
 
 func GetContainerIDByName(name string) (string, error) {
-	ctx := context.Background()
+	cmd := exec.Command("docker", "ps", "-q", "-f", "name="+name)
 
-	cli, err := client.NewClientWithOpts(client.FromEnv)
+	var out bytes.Buffer
+	cmd.Stdout = &out
+
+	err := cmd.Run()
 	if err != nil {
-		return "", fmt.Errorf("error creating Docker client: %w", err)
+		return "", err
 	}
 
-	// Lista todos los contenedores en ejecución
-	containers, err := cli.ContainerList(ctx, types.ContainerListOptions{All: true})
-	if err != nil {
-		return "", fmt.Errorf("error listing containers: %w", err)
+	id := strings.TrimSpace(out.String())
+	if id == "" {
+		return "", fmt.Errorf("container '%s' not found", name)
 	}
 
-	for _, container := range containers {
-		for _, containerName := range container.Names {
-			cleanName := strings.TrimPrefix(containerName, "/")
-			if cleanName == name {
-				return container.ID, nil
-			}
-		}
-	}
-
-	return "", fmt.Errorf("container with name '%s' not found", name)
+	return id, nil
 }
