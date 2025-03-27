@@ -22,6 +22,6 @@ func ResetDatabase(containerId string, dbname string) bool {
 	return true
 }
 
-func FixDatabase(dbname string) bool {
+func FixDatabase(containerId string, dbname string) bool {
 	return true
 }

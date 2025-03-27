@@ -1,8 +1,8 @@
 package main
 
 import (
-	"Maria"
 	"fmt"
+	"github.com/palomino513/arcanine/Maria"
 	"github.com/palomino513/arcanine/Tools"
 	"os"
 )
@@ -60,7 +60,7 @@ func main() {
 		} else {
 			Tools.InfoMessage("Command not recognized: " + arg)
 		}
-		
+
 		return
 	}
 
