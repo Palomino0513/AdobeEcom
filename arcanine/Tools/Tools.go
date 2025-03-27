@@ -73,3 +73,31 @@ func GetContainerIDByName(name string) (string, error) {
 
 	return id, nil
 }
+
+func StringInSlice(target string, list []string) bool {
+	for _, item := range list {
+		if item == target {
+			return true
+		}
+	}
+	return false
+}
+
+func IsGeneralCommand() bool {
+	commands := []string{"up", "down", "ps", "restart"}
+	return StringInSlice(os.Args[1], commands)
+}
+
+func ExecuteGeneralCommand() bool {
+	if os.Args[1] == "up" {
+		return RunCommand("docker-compose", "up", "-d")
+	} else if os.Args[1] == "down" {
+		return RunCommand("docker-compose", "down")
+	} else if os.Args[1] == "ps" {
+		return RunCommand("docker-compose", "ps")
+	} else if os.Args[1] == "restart" {
+		return RunCommand("docker-compose", "down") && RunCommand("docker-compose", "up", "-d")
+	}
+
+	return false
+}
