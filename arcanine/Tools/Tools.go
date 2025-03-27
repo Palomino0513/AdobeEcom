@@ -24,7 +24,7 @@ func Info() {
 		" la forma mas rapida y practica posible.", string(ColorReset))
 }
 
-func RunCommand(name string, args ...string) {
+func RunCommand(name string, args ...string) bool {
 	cmd := exec.Command(name, args...)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
@@ -33,7 +33,10 @@ func RunCommand(name string, args ...string) {
 	if err := cmd.Run(); err != nil {
 		ErrorMessage("Error al ejecutar el comando:")
 		fmt.Println(err)
+		return false
 	}
+
+	return true
 }
 
 func InfoMessage(message string) {

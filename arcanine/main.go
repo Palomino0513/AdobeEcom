@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/palomino513/arcanine/Adobe"
 	"github.com/palomino513/arcanine/Maria"
 	"github.com/palomino513/arcanine/Tools"
 	"os"
@@ -34,6 +35,14 @@ func main() {
 	} else if arg == "restart" {
 		Tools.RunCommand("docker-compose", "down")
 		Tools.RunCommand("docker-compose", "up", "-d")
+		return
+	} else if arg == "reset" {
+		Tools.RunCommand("docker-compose", "down")
+		Tools.RunCommand("rm", "-rf", "generated/*")
+		Tools.RunCommand("rm", "-rf", "pub/static/*")
+		Tools.RunCommand("docker-compose", "up", "-d")
+		Adobe.RunAdobeCommand("setup:upgrade")
+		Adobe.RunAdobeCommand("cache:clean")
 		return
 	}
 
