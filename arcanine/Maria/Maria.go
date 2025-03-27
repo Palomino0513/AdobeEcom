@@ -17,7 +17,7 @@ func ResetDatabase(containerId string, dbname string) bool {
 	Tools.InfoMessage("Se usara el contedor " + containerId)
 	query := "DROP DATABASE " + dbname + "; CREATE DATABASE " + dbname + ";"
 	Tools.InfoMessage("Limpiando la base de datos " + dbname)
-	Tools.RunCommand("docker", "exec", "-it ", containerId, "mysql -u root -p -e", query)
+	Tools.RunCommand("docker", "exec", "-it", containerId, "mysql", "-u", "root", "-p", "-e", query)
 	Tools.SuccessMessage("Hecho")
 	return true
 }

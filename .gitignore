@@ -3,3 +3,4 @@ mysql/db
 services_logs
 logs
 mysql/dump/
+arcanine/main

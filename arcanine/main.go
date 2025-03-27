@@ -8,9 +8,9 @@ import (
 )
 
 const (
-	DBName         = "limpio"
-	Hostname       = "http://limpio.local/"
-	SecureHostname = "https://limpio.local/"
+	DBName         = "vitro"
+	Hostname       = "http://vitro.local/"
+	SecureHostname = "https://vitro.local/"
 )
 
 func main() {
@@ -49,13 +49,19 @@ func main() {
 		}
 
 		Tools.InfoMessage("ID del contenedor: " + containerId)
-		command := os.Args[2]
 
-		if command == "create" || arg == "Dc" {
+		command := func() string {
+			if arg == "db" {
+				return os.Args[2]
+			}
+			return arg
+		}()
+
+		if command == "create" || command == "Dc" {
 			Maria.CreateDatabase(containerId, DBName)
-		} else if command == "reset" || arg == "Dr" {
+		} else if command == "reset" || command == "Dr" {
 			Maria.ResetDatabase(containerId, DBName)
-		} else if command == "fix" || arg == "Df" {
+		} else if command == "fix" || command == "Df" {
 			Maria.FixDatabase(containerId, DBName)
 		} else {
 			Tools.InfoMessage("Command not recognized: " + arg)
