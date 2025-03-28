@@ -8,7 +8,7 @@ import (
 func IsAdobeCommand() bool {
 	command := os.Args[1]
 	shortcut := []rune(command)
-	return command == "adobe" || shortcut[0] == 'A'
+	return command == "adobe" || shortcut[0] == 'a'
 }
 
 func getAdobeCommand() string {
@@ -80,6 +80,7 @@ func AdobeCreateAdmin() bool {
 
 func ExecuteAdobeCommand() bool {
 	command := getAdobeCommand()
+	Tools.InfoMessage("Commando a ejecutar " + command)
 
 	if command == "install" || command == "ai" {
 		return AdobeComposerInstall()
@@ -101,6 +102,7 @@ func ExecuteAdobeCommand() bool {
 		return AdobeCreateAdmin()
 	} else if isAdobeCacheCommand() {
 		subcommand := getAdobeCacheCommand()
+		Tools.InfoMessage("Subcomando a ejecutar " + subcommand)
 
 		if subcommand == "status" || subcommand == "acs" {
 			return RunAdobeCommand("cache:status")

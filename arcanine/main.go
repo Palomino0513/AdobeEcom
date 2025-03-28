@@ -22,16 +22,19 @@ func main() {
 	// validamos y ejecutamos en caso de que sea un comando de docker.
 	if Tools.IsGeneralCommand() {
 		Tools.ExecuteGeneralCommand()
+		return
 	}
 
 	// validamos si el comando es de base de datos.
 	if Maria.IsDBCommand() {
 		Maria.ExecuteMariaCommand(DBName)
+		return
 	}
 
 	// validamos y ejecutamos en caso de que sea un comando de Adobe.
 	if Adobe.IsAdobeCommand() {
 		Adobe.ExecuteAdobeCommand()
+		return
 	}
 
 	Tools.Info()
