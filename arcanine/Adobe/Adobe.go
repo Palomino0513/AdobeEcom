@@ -18,6 +18,36 @@ func getAdobeCommand() string {
 	return os.Args[1]
 }
 
+func isAdobeCacheCommand() bool {
+	if !IsAdobeCommand() {
+		return false
+	}
+
+	if os.Args[1] == "adobe" && os.Args[2] == "cache" {
+		return true
+	}
+
+	shortCommands := []string{"acs", "ace", "acd", "acc", "acf"}
+	if Tools.StringInSlice(os.Args[1], shortCommands) {
+		return true
+	}
+
+	commands := []string{"status", "enable", "disable", "clear", "flush"}
+	if os.Args[1] == "adobe" && os.Args[2] == "cache" && len(os.Args) == 3 && Tools.StringInSlice(os.Args[3], commands) {
+		return true
+	}
+
+	return false
+}
+
+func getAdobeCacheCommand() string {
+	if len(os.Args) == 3 {
+		return os.Args[3]
+	}
+
+	return os.Args[1]
+}
+
 func RunAdobeCommand(command string) bool {
 	return Tools.RunCommand("docker-compose", "exec", "-u", "magento2", "web", "php", "bin/magento", command)
 }
@@ -51,22 +81,41 @@ func AdobeCreateAdmin() bool {
 func ExecuteAdobeCommand() bool {
 	command := getAdobeCommand()
 
-	if command == "install" || command == "Ai" {
+	if command == "install" || command == "ai" {
 		return AdobeComposerInstall()
-	} else if command == "upgrade" || command == "Au" {
+	} else if command == "upgrade" || command == "au" {
 		return RunAdobeCommand("setup:upgrade")
-	} else if command == "reindex" || command == "Ar" {
+	} else if command == "reindex" || command == "ar" {
 		return RunAdobeCommand("indexer:reindex")
-	} else if command == "reset" || command == "Az" {
+	} else if command == "reset" || command == "az" {
 		Tools.RunCommand("docker-compose", "down")
 		Tools.RunCommand("rm", "-rf", "generated/*")
 		Tools.RunCommand("rm", "-rf", "pub/static/*")
 		Tools.RunCommand("docker-compose", "up", "-d")
 		RunAdobeCommand("setup:upgrade")
 		RunAdobeCommand("cache:clean")
-	} else {
-		return AdobeBash()
+		return true
+	} else if command == "static-content" || command == "asc" {
+		return Tools.RunCommand("docker-compose", "exec", "-u", "magento2", "web", "php", "bin/magento", "setup:static-content:deploy", "es_MX", "-f")
+	} else if command == "create-admin" || command == "aca" {
+		return AdobeCreateAdmin()
+	} else if isAdobeCacheCommand() {
+		subcommand := getAdobeCacheCommand()
+
+		if subcommand == "status" || subcommand == "acs" {
+			return RunAdobeCommand("cache:status")
+		} else if subcommand == "enable" || subcommand == "ace" {
+			return AdobeCacheEnable()
+		} else if subcommand == "disable" || subcommand == "acd" {
+			return RunAdobeCommand("cache:disable")
+		} else if subcommand == "clean" || subcommand == "acc" {
+			return RunAdobeCommand("cache:clean")
+		} else if subcommand == "flush" || subcommand == "acf" {
+			return RunAdobeCommand("cache:flush")
+		} else {
+			return RunAdobeCommand("cache:clean")
+		}
 	}
 
-	return false
+	return AdobeBash()
 }

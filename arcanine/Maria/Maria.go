@@ -9,7 +9,7 @@ import (
 func IsDBCommand() bool {
 	command := os.Args[1]
 	shortcut := []rune(command)
-	return command == "db" || shortcut[0] == 'D'
+	return command == "db" || shortcut[0] == 'd'
 }
 
 func getMariaCommand() string {
@@ -50,11 +50,11 @@ func ExecuteMariaCommand(DBName string) bool {
 		return false
 	}
 
-	if command == "create" || command == "Dc" {
+	if command == "create" || command == "dc" {
 		return CreateDatabase(containerId, DBName)
-	} else if command == "reset" || command == "Dr" {
+	} else if command == "reset" || command == "dr" {
 		return ResetDatabase(containerId, DBName)
-	} else if command == "fix" || command == "Df" {
+	} else if command == "fix" || command == "df" {
 		return FixDatabase(containerId, DBName)
 	} else {
 		Tools.InfoMessage("Command not recognized: " + command)
