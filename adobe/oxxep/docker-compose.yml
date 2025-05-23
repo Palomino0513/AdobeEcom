@@ -1,0 +1,19 @@
+services:
+  web:
+    image: 'wolfsellers/magento2-cloud-local:linux-apache-phpfpm82'
+    ports:
+      - 8014:80
+    volumes:
+      - ./:/var/www/html
+      - ~/.composer:/home/magento2/.composer
+    external_links:
+      - "elasticsearch7:elastic"
+      - "redis:redis"
+      - "mysql:mysql"
+    container_name: oxxep
+    restart: always
+    networks:
+      - adobe
+networks:
+  adobe:
+    external: true
