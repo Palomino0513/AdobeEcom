@@ -2,7 +2,7 @@ services:
   web:
     image: 'wolfsellers/magento2-cloud-local:linux-apache-phpfpm82'
     ports:
-      - 8004:80
+      - 8014:80
     volumes:
       - ./:/var/www/html
       - ~/.composer:/home/magento2/.composer
@@ -10,7 +10,7 @@ services:
       - "elasticsearch7:elastic"
       - "redis:redis"
       - "mysql:mysql"
-    container_name: promo
+    container_name: oxxep
     restart: always
     networks:
       - adobe
