@@ -1,0 +1,39 @@
+docker exec -it oxxep bash
+
+apt update
+apt install neovim
+
+mkdir -p ~/.config/nvim
+touch ~/.config/nvim/init.lua
+curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+
+vim ~/.config/nvim/init.lua
+
+
+vim.cmd([[
+call plug#begin('~/.vim/plugged')
+
+Plug 'vim-vdebug/vdebug'
+
+call plug#end()
+]])
+
+
+nvim ~/.config/nvim/init.vim
+
+
+call plug#begin('~/.vim/plugged')
+
+Plug 'vim-vdebug/vdebug'
+
+call plug#end()
+
+
+:PlugInstall
+
+
+
+sudo apt install python3-pip
+sudo apt remove python3-neovim
+pip3 install --user --upgrade pynvim
